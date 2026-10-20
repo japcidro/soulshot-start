@@ -1,0 +1,204 @@
+/* SoulShot — start.soulshot.online, the flow.
+   One phone-width column on the sunrise: the app's own quiz, personalizing,
+   email, paywall and bridge screens, in HTML. Tokens come from site.css. */
+
+html, body { height: 100%; }
+.sky.flow-sky { min-height: 100dvh; }
+
+.flow {
+  position: relative; z-index: 1;
+  max-width: 440px; margin: 0 auto; min-height: 100dvh;
+  display: flex; flex-direction: column;
+  padding-top: max(16px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(22px, env(safe-area-inset-left, 0px));
+  padding-right: max(22px, env(safe-area-inset-right, 0px));
+}
+.flow-glow {
+  display: none; position: fixed; left: 50%; bottom: -30vh; width: 90vw; height: 70vh; transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(255, 224, 194, .85), rgba(255, 224, 194, 0)); pointer-events: none; z-index: 0;
+}
+@media (min-width: 900px) { .flow-glow { display: block; } }
+
+/* Header: back, progress. */
+.flow-top { display: flex; align-items: center; gap: 14px; min-height: 44px; }
+.back {
+  width: 44px; height: 44px; border-radius: 50%; border: 0; flex: 0 0 auto;
+  background: rgba(255, 255, 255, .75); color: var(--plum); display: grid; place-items: center; cursor: pointer;
+  text-decoration: none; transition: transform .16s ease;
+}
+.back:active { transform: scale(.94); }
+.back svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.flow-top .brand { font-size: 1.25rem; }
+.progress { flex: 1; height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .7); overflow: hidden; }
+.progress i { display: block; height: 100%; width: 0; background: var(--plum); border-radius: 4px; transition: width .36s cubic-bezier(.2, .8, .2, 1); }
+
+/* Stage: one screen at a time. */
+.stage { flex: 1; display: flex; flex-direction: column; padding-top: clamp(28px, 8vh, 64px); }
+.stage.center { justify-content: center; padding-top: 0; }
+.stage > * { animation: settle .36s cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes settle { from { opacity: 0; transform: translateY(10px); } }
+
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--plum-2); margin-bottom: 10px; }
+.prompt {
+  font-family: var(--serif); font-variation-settings: "SOFT" 60; font-weight: 400;
+  font-size: clamp(27px, 7.2vw, 31px); line-height: 1.15; letter-spacing: -.01em; text-wrap: balance; margin: 0;
+}
+.hint { font-size: 16px; line-height: 1.4; color: var(--plum-2); margin-top: 12px; }
+
+/* Chips: white glass, plum when chosen. */
+.chips { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 26px; }
+.chip {
+  appearance: none; border: 0; padding: 13px 20px; border-radius: 999px; max-width: 100%;
+  background: rgba(255, 255, 255, .75); font: inherit; font-size: 17px; font-weight: 500; color: var(--plum);
+  cursor: pointer; text-align: left; box-shadow: 0 10px 24px -14px rgba(58, 31, 61, .35);
+  transition: transform .16s ease, background .16s ease, color .16s ease;
+}
+.chip:active { transform: scale(.96); }
+.chip[aria-pressed="true"] { background: var(--plum); color: var(--cream); }
+
+/* Fields. */
+.field {
+  display: block; margin-top: 22px; width: 100%; height: 58px; border-radius: 18px; border: 0;
+  background: #fff; padding: 0 18px; font: inherit; font-size: 18px; color: var(--plum);
+  box-shadow: 0 10px 24px -14px rgba(58, 31, 61, .35);
+}
+.field::placeholder { color: var(--plum-2); }
+textarea.field { height: auto; min-height: 100px; padding: 16px 18px; resize: none; line-height: 1.4; }
+.field.other { margin-top: 12px; }
+.starters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.starters .chip { font-size: 15px; min-height: 44px; padding: 10px 14px; box-shadow: none; background: rgba(255, 255, 255, .62); }
+
+/* Buttons at the foot of every screen. */
+.actions { margin-top: auto; padding-top: 28px; display: grid; gap: 12px; }
+.cta {
+  appearance: none; border: 0; height: 58px; border-radius: 999px; padding: 0 22px;
+  background: var(--plum); color: var(--cream); font: inherit; font-size: 17px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;
+  box-shadow: 0 18px 30px -14px rgba(58, 31, 61, .5); transition: transform .16s ease, opacity .16s ease;
+}
+.cta:active { transform: scale(.98); }
+.cta:disabled { opacity: .45; cursor: default; box-shadow: none; }
+.cta.ghost { background: #fff; color: var(--plum); box-shadow: 0 10px 24px -14px rgba(58, 31, 61, .35); }
+.cta.pay { background: #000; color: #fff; }
+.cta.pay svg { width: 44px; height: 18px; fill: currentColor; }
+.sub { font-size: 14px; line-height: 1.4; text-align: center; color: var(--plum-2); }
+.sub a { color: inherit; }
+.err { font-size: 14px; line-height: 1.4; color: #A33A2B; background: #F9E3E0; padding: 10px 14px; border-radius: 12px; }
+
+/* The orb, bigger, breathing. */
+.orb.xl { width: 112px; height: 112px; margin: 0 auto; box-shadow: 0 30px 60px -20px rgba(200, 100, 30, .6); animation: breathe 4.4s ease-in-out infinite; }
+.orb.md { width: 84px; height: 84px; margin: 0 auto; animation: breathe 4.4s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: scale(1.06); } }
+
+/* Reflect: Sol says it back. */
+.reflect { text-align: center; padding-top: clamp(8px, 5vh, 40px); }
+.reflect .prompt { margin-top: 32px; }
+.reflect .hint { font-size: 17px; }
+.quote {
+  font-family: var(--serif); font-variation-settings: "SOFT" 60; font-style: italic; font-size: 22px; line-height: 1.3;
+  color: var(--plum); margin-top: 18px; padding: 16px 20px; border-radius: 20px; background: rgba(255, 255, 255, .6);
+  overflow-wrap: anywhere;
+}
+.commit .orb.md { margin-top: clamp(40px, 12vh, 120px); }
+
+/* Voices: four deliveries, a disc each, tap to hear. */
+.voices { display: grid; gap: 10px; margin-top: 22px; }
+.voice {
+  appearance: none; width: 100%; display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 18px;
+  background: rgba(255, 255, 255, .72); border: 2px solid transparent; cursor: pointer; text-align: left; font: inherit; color: inherit;
+  transition: background .16s ease, border-color .16s ease;
+}
+.voice[aria-pressed="true"] { border-color: var(--plum); background: #fff; }
+.voice .disc { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; color: var(--cream); background: var(--sun); }
+.voice .disc.prayer { background: var(--gold); }
+.voice .disc.motivation { background: var(--coral); }
+.voice .disc.manifestation { background: var(--violet); }
+.voice .disc svg { width: 18px; height: 18px; fill: currentColor; }
+.voice .disc .ic-play { margin-left: 2px; }
+.voice .disc .ic-pause { display: none; }
+.voice.playing .disc .ic-play { display: none; }
+.voice.playing .disc .ic-pause { display: block; }
+.voice b { display: block; font-weight: 600; font-size: 17px; }
+.voice small { display: block; font-size: 14px; line-height: 1.35; color: var(--plum-2); margin-top: 2px; }
+
+/* Personalizing: the orb inside a ring that fills. */
+.ring {
+  width: 160px; height: 160px; border-radius: 50%; margin: 0 auto; display: grid; place-items: center; position: relative;
+  background: conic-gradient(var(--plum) var(--p, 0%), rgba(58, 31, 61, .14) 0);
+  transition: --p .2s linear;
+}
+.ring::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: #FFE4C8; }
+.ring .orb { position: relative; z-index: 1; width: 88px; height: 88px; animation: breathe 2.2s ease-in-out infinite; }
+.beats { margin-top: 36px; display: grid; gap: 14px; font-family: var(--serif); font-variation-settings: "SOFT" 60; font-size: 21px; line-height: 1.3; }
+.beat { display: flex; gap: 12px; align-items: baseline; color: var(--plum-2); transition: color .4s ease; overflow-wrap: anywhere; }
+.beat i { width: 22px; height: 22px; border-radius: 50%; flex: 0 0 auto; background: rgba(58, 31, 61, .15); transform: translateY(3px); display: grid; place-items: center; transition: background .4s ease; }
+.beat i svg { width: 12px; height: 12px; fill: none; stroke: var(--cream); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+.beat.on, .beat.done { color: var(--plum); }
+.beat.done i { background: var(--plum); }
+.beat.done i svg { opacity: 1; }
+
+/* Email and the code. */
+.code { display: flex; gap: 8px; margin-top: 22px; }
+.code span {
+  flex: 1; height: 58px; border-radius: 14px; background: #fff; display: grid; place-items: center;
+  font-family: var(--serif); font-size: 24px; color: var(--plum); box-shadow: 0 10px 24px -14px rgba(58, 31, 61, .35);
+}
+.code span.cursor { box-shadow: inset 0 0 0 2px var(--plum); }
+.code.focused { outline: 3px solid var(--plum); outline-offset: 5px; border-radius: 16px; }
+.linkish { appearance: none; border: 0; background: none; padding: 12px 0; margin: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Paywall: the shot card, the checks, the plans. */
+.card {
+  margin-top: 22px; border-radius: 26px; overflow: hidden; position: relative; height: 236px; isolation: isolate;
+  background-size: cover; background-position: center; color: var(--cream); box-shadow: 0 18px 30px -14px rgba(58, 31, 61, .45);
+}
+.card::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(30, 20, 36, .05) 30%, rgba(30, 20, 36, .55) 70%, rgba(30, 20, 36, .82)); }
+.card .badge, .card .preview-chip { position: absolute; top: 16px; padding: 7px 13px; border-radius: 999px; background: rgba(30, 20, 36, .45); font-size: 13px; font-weight: 600; }
+.card .badge { left: 16px; }
+.card .preview-chip { right: 16px; }
+.card .title { position: absolute; left: 18px; right: 92px; bottom: 62px; font-family: var(--serif); font-variation-settings: "SOFT" 60; font-style: italic; font-size: 23px; line-height: 1.12; overflow-wrap: anywhere; }
+.card .dur { position: absolute; left: 18px; bottom: 18px; padding: 6px 12px; border-radius: 999px; background: rgba(30, 20, 36, .45); font-size: 13px; font-variant-numeric: tabular-nums; }
+.card .play { position: absolute; right: 16px; bottom: 16px; width: 60px; height: 60px; border-radius: 50%; border: 0; background: var(--cream); color: var(--plum); display: grid; place-items: center; cursor: pointer; }
+.card .play:focus-visible { outline-color: var(--cream); }
+.card .play svg { width: 22px; height: 22px; fill: currentColor; }
+.card .play .ic-play { margin-left: 3px; }
+.card .play .ic-pause { display: none; }
+.card.playing .play .ic-play { display: none; }
+.card.playing .play .ic-pause { display: block; }
+.card .track { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255, 244, 230, .25); }
+.card .track i { display: block; height: 100%; width: 0; background: var(--cream); transition: width .2s linear; }
+.checks { margin-top: 18px; display: grid; gap: 10px; font-size: 16px; line-height: 1.35; }
+.checks div { display: flex; gap: 12px; align-items: flex-start; }
+.checks i { width: 24px; height: 24px; border-radius: 50%; background: var(--plum); flex: 0 0 auto; display: grid; place-items: center; margin-top: 1px; }
+.checks i svg { width: 13px; height: 13px; fill: none; stroke: var(--cream); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.plans { margin-top: 20px; display: grid; gap: 10px; }
+.plan {
+  appearance: none; width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 14px 16px; border-radius: 18px; background: rgba(255, 255, 255, .72); border: 2px solid transparent;
+  cursor: pointer; font: inherit; color: inherit; text-align: left; transition: background .16s ease, border-color .16s ease;
+}
+.plan[aria-pressed="true"] { border-color: var(--plum); background: #fff; }
+.plan b { display: block; font-weight: 600; font-size: 17px; }
+.plan small { display: block; font-size: 14px; color: var(--plum-2); margin-top: 2px; }
+.plan .tag { flex: 0 0 auto; font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 999px; background: var(--peach); color: var(--plum); white-space: nowrap; }
+.fine { font-size: 13px; line-height: 1.45; color: var(--plum-2); text-align: center; }
+.links { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 18px; font-size: 13px; color: var(--plum-2); margin-top: 4px; }
+.links a { color: inherit; text-decoration: none; display: inline-block; padding: 13px 2px; }
+.links a:hover { text-decoration: underline; }
+
+/* The bridge to the app. */
+.steps-list { margin-top: 24px; display: grid; gap: 16px; }
+.steps-list .step { display: flex; flex-direction: row; gap: 14px; align-items: flex-start; } /* site.css stacks .step; this one is a row */
+.steps-list i { width: 30px; height: 30px; border-radius: 50%; background: var(--plum); color: var(--cream); display: grid; place-items: center; font-style: normal; font-family: var(--serif); font-size: 15px; flex: 0 0 auto; }
+.steps-list b { display: block; font-weight: 600; font-size: 17px; }
+.steps-list small { display: block; font-size: 14px; line-height: 1.4; color: var(--plum-2); margin-top: 2px; overflow-wrap: anywhere; }
+.qr { display: none; margin: 22px auto 0; width: 150px; height: 150px; border-radius: 16px; background: #fff; padding: 10px; }
+.qr svg { width: 100%; height: 100%; display: block; }
+@media (hover: hover) and (min-width: 900px) { .qr { display: block; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .stage > *, .orb, .ring .orb { animation: none !important; }
+  .progress i, .card .track i, .beat, .beat i, .chip, .cta, .back, .plan, .voice { transition: none; }
+}

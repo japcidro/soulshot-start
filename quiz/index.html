@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your first shot · SoulShot</title>
+<meta name="description" content="Answer a few questions and hear your first SoulShot: a minute of prayer, motivation or manifestation, written for you and read in a voice you choose.">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SoulShot">
+<meta property="og:title" content="Hear your first shot">
+<meta property="og:description" content="A minute a day, written for you. Two minutes of questions, then your first shot.">
+<meta property="og:url" content="https://start.soulshot.online/quiz/">
+<meta property="og:image" content="https://start.soulshot.online/img/og.png">
+<meta name="theme-color" content="#FFF4E6">
+<link rel="icon" href="../img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../funnel.css">
+<script src="questions.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script defer src="flow.js"></script>
+</head>
+<body>
+<div class="sky flow-sky">
+<div class="flow-glow" aria-hidden="true"></div>
+<div class="flow" id="flow">
+  <header class="flow-top">
+    <button class="back" id="back" type="button" aria-label="Back">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <div class="progress" id="progress" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="fill"></i></div>
+    <a class="brand" id="brand" href="../" hidden><span class="orb" aria-hidden="true"></span>SoulShot</a>
+  </header>
+  <main class="stage" id="stage">
+    <noscript><p class="prompt">This page needs JavaScript to ask its questions.</p><p class="hint">Turn it on, or <a href="https://apps.apple.com/app/id6813150517">get the app</a> and answer there.</p></noscript>
+  </main>
+</div>
+<audio id="preview" preload="none"></audio>
+</div>
+</body>
+</html>
